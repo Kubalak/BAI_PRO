@@ -78,7 +78,7 @@ export default {
 
         console.log('Form data:', formDataRegister);
       axios
-        .post('http://127.0.0.1:8000/mainApp/register/', formDataRegister)
+        .post('http://127.0.0.1:8000/main/register/', formDataRegister)
         .then(response => {
           console.log('User registered successfully:', response.data);
           //Wyczyszczenie formularza
@@ -104,7 +104,7 @@ export default {
     formDataLogin.append('password', this.user.password1);
 
     console.log('Form data:', formDataLogin);
-    axios.post('http://127.0.0.1:8000/mainApp/login/', formDataLogin)
+    axios.post('http://127.0.0.1:8000/main/login/', formDataLogin)
       .then(response => {
         console.log('User logged in successfully:', response.data);
         this.user.username = '';
