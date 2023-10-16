@@ -14,8 +14,10 @@
         <div class="mt-3">
         <button type="submit" class="btn btn-outline-secondary btn-lg">
             Login
-        </button> 
-            
+        </button>
+          <div class="mt-3">
+            <router-link to="/" class="icon-link text-success"><i class="bi bi-arrow-left"></i> Home</router-link> 
+          </div>
         </div>
       </form>
     </div> 

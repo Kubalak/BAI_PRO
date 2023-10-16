@@ -2,6 +2,7 @@ import './assets/main.css'
 import './assets/base.css'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap/dist/js/bootstrap.bundle';
+import 'bootstrap-icons/font/bootstrap-icons.css'
 
 import { createRouter, createWebHashHistory } from 'vue-router';
 import { createApp } from 'vue'

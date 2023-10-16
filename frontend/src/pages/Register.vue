@@ -10,14 +10,14 @@
     </ul>
 </div-->
     
-<div class="d-flex justify-content-center align-items-center text-center vh-100 registerForm">  
+<div class="d-flex justify-content-center align-items-center text-center min-vh-100 registerForm">  
 <form @submit.prevent="submitForm" class="container-mt5">
     <h1>User Register</h1>
     <div class="form-group">
       <label for="username">Username:</label>
       <input type="text" v-model="user.username" id="username" class="form-control"/>
     </div>
-    <div v-if="formType === 'register'">
+    <div>
       <label for="email">Email:</label>
       <input type="email" v-model="user.email" id="email" class="form-control"/>
     </div>
@@ -32,7 +32,10 @@
     <div class="mt-3">
     <button type="submit" class="btn btn-outline-secondary btn-lg">
         Register
-    </button> 
+    </button>
+    <div class="pt-3">
+      <router-link to="/" class="icon-link text-success"><i class="bi bi-arrow-left"></i> Home</router-link> 
+    </div>
         
     </div>
   </form>

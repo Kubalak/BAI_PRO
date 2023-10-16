@@ -1,5 +1,5 @@
 from django.http import JsonResponse, HttpResponse, HttpRequest
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from .forms import UserForm
 from django.contrib.auth import login, authenticate
 from django.views.decorators.http import require_http_methods
@@ -54,8 +54,9 @@ def login_view(request):
 
 @require_http_methods(["GET"])
 def test(request:HttpRequest):
-    return JsonResponse({"data": [i for i in range(1,20)], "authenticated": request.user.is_authenticated})
+    return JsonResponse({"data": [i + 1 for i in range(20)], "authenticated": request.user.is_authenticated})
 
 @require_http_methods(['GET'])
+@ensure_csrf_cookie  # Zapewnia że ciastko zostanie wysłane podczas sprawdzania stanu użytkownika.
 def islogin(request):
     return JsonResponse({"authenticated": request.user.is_authenticated})

@@ -13,18 +13,20 @@
 import api from './getAxios';
   export default {
     name: "App",
-    mounted() {
+    /*
+     //TODO: Sprawdzić czy faktycznie działą
+     mounted() {
       api.get('main/islogin/')
       .then(response => {
         return response.data
       })
       .then(data => {
         if(!data.authenticated)
-        this.$router.push('/login')
+          this.$router.push('/login')
       })
       .catch(error => {
         console.error(error)
       })
-    }
+    } */
   }
 </script>
