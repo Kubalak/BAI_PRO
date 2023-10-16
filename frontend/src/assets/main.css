@@ -2,3 +2,22 @@
   font-family: 'Roboto';
   src: url('assets/font.Roboto-Italic.ttf') format('ttf');
 }
+
+.registerForm{
+  background-color: #121212;
+  color:#42b883;
+  font-size: large;
+  font-family:monospace
+}
+
+.nav-css{
+  background-color: #42b883;
+  font-size: larger;
+  font-family: monospace;
+  font-weight: 700;
+}
+
+.nav-pills .active {
+background-color: #06c971;
+color: black;
+}

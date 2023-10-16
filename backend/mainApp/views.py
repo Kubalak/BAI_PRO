@@ -1,13 +1,13 @@
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse, HttpResponse, HttpRequest
 from django.views.decorators.csrf import csrf_exempt
 from .forms import UserForm
-from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import login, authenticate
+from django.views.decorators.http import require_http_methods
 
 def index(request):
     return HttpResponse("Hello there from index!")
 
-@csrf_exempt
+# @csrf_exempt
 def register_view(request):
     if request.method == 'POST':
         try:
@@ -34,7 +34,7 @@ def register_view(request):
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
     
-@csrf_exempt
+# @csrf_exempt
 def login_view(request):
     if request.method == 'POST':
         try:
@@ -51,4 +51,11 @@ def login_view(request):
         except Exception as e:
             return JsonResponse({'error':str(e)}, status=500)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
-                
+
+@require_http_methods(["GET"])
+def test(request:HttpRequest):
+    return JsonResponse({"data": [i for i in range(1,20)], "authenticated": request.user.is_authenticated})
+
+@require_http_methods(['GET'])
+def islogin(request):
+    return JsonResponse({"authenticated": request.user.is_authenticated})
