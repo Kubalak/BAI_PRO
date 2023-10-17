@@ -7,7 +7,7 @@ from django.views.decorators.http import require_http_methods
 def index(request):
     return HttpResponse("Hello there from index!")
 
-# @csrf_exempt
+@csrf_exempt
 def register_view(request):
     if request.method == 'POST':
         try:
@@ -34,7 +34,7 @@ def register_view(request):
     else:
         return JsonResponse({'error': 'Invalid request method'}, status=405)
     
-# @csrf_exempt
+@csrf_exempt
 def login_view(request):
     if request.method == 'POST':
         try:

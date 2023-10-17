@@ -12,12 +12,13 @@
 
 .nav-css{
   background-color: #42b883;
+  color: black;
   font-size: larger;
   font-family: monospace;
   font-weight: 700;
 }
 
-.nav-pills .active {
-background-color: #06c971;
-color: black;
+.nav-item .nav-link.active {
+  background-color: #06c971 !important; /* Change this to your desired background color */
+  color: black !important; /* Change this to your desired text color */
 }

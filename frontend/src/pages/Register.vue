@@ -1,14 +1,17 @@
 <template>
-<!--div> /* Może przyda się w przyszłości dlatego zostawione */
+<div>
     <ul class="nav nav-pills nav-fill nav-css">
       <li class="nav-item">
-        <a class="nav-link" :class="{ active: activeLink === true}" @click="changeFormType('register')"> Register </a>
+        <router-link to="/" class="nav-link" active-class="active">Home</router-link> 
       </li>
       <li class="nav-item">
-        <a class="nav-link" :class="{ active: activeLink === false}" @click="changeFormType('login')"> Login </a>
+        <router-link to="/register" class="nav-link" active-class="active">Register</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link to="/login" class="nav-link" active-class="active">Login</router-link>
       </li>
     </ul>
-</div-->
+</div>
     
 <div class="d-flex justify-content-center align-items-center text-center min-vh-100 registerForm">  
 <form @submit.prevent="submitForm" class="container-mt5">
@@ -34,7 +37,7 @@
         Register
     </button>
     <div class="pt-3">
-      <router-link to="/" class="icon-link text-success"><i class="bi bi-arrow-left"></i> Home</router-link> 
+      
     </div>
         
     </div>
