@@ -5,10 +5,10 @@
         isMenuOpen=false
         menuTitle='Demo Panel'
         profileName="Patryk Jaworski"
-        :menuItems="[{'link':'#', 'name':'Sql Injection', 'icon':''},
-                     {'link':'#', 'name':'XSS'},
-                     {'link':'#', 'name':'CORS'},
-                     {'link':'#', 'name':'CSRF'}]"/>
+        :menuItems="[{'link':'dashboard/sqldemo', 'name':'Sql Injection', 'icon':''},
+                     {'link':'dashboard/xssdemo', 'name':'XSS', 'icon':''},
+                     {'link':'dashboard/corsdemo', 'name':'CORS', 'icon':''},
+                     {'link':'dashboard/csrfdemo', 'name':'CSRF', 'icon':''}]"/>
     </div>
     <div class="bg-success min-vh-100 p-4 text-center">
         <h1 class="">This is dashboard</h1>

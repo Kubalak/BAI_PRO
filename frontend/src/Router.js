@@ -2,6 +2,10 @@ import Register from './pages/Register.vue';
 import Index from './pages/Index.vue';
 import Login from './pages/Login.vue';
 import Dashboard from './pages/Dashboard.vue';
+import SqlDemo from './pages/SqlDemo.vue';
+import XssDemo from './pages/XssDemo.vue';
+import CorsDemo from './pages/CorsDemo.vue';
+import CsrfDemo from './pages/CsrfDemo.vue';
 
 
 const routes = [
@@ -24,6 +28,26 @@ const routes = [
         path: "/dashboard",
         name: "dashboard",
         component: Dashboard
+    },
+    {
+        path:"/dashboard/sqldemo",
+        name: "sqldemo",
+        component: SqlDemo
+    },
+    {
+    path:"/dashboard/xssdemo",
+    name: "xssdemo",
+    component: XssDemo
+    },
+    {
+    path:"/dashboard/corsdemo",
+    name: "corsdemo",
+    component: CorsDemo
+    },
+    {
+    path:"/dashboard/csrfdemo",
+    name: "csrfdemo",
+    component: CsrfDemo
     }
 ]
 
