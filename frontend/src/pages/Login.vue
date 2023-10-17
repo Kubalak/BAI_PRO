@@ -1,5 +1,5 @@
 <template>       
-    <div class="d-flex justify-content-center align-items-center text-center vh-100 registerForm">  
+    <div class="d-flex justify-content-center min-vh-100 align-items-center text-center registerForm">  
     <form @submit.prevent="submitForm" class="container-mt5">
         <h1>User Login</h1>
         <div class="form-group">
