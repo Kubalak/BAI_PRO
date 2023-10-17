@@ -37,14 +37,13 @@
     
     export default {
       name: "Register",
-      
+      components: {},      
       data() {
         return {
           user: {
             username: '',
             password: '',
           },
-          activeLink: true,
         };
       },
       methods: {

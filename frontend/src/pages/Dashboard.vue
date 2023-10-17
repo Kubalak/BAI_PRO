@@ -8,15 +8,15 @@
         :menuItems="[{'link':'dashboard/sqldemo', 'name':'Sql Injection', 'icon':''},
                      {'link':'dashboard/xssdemo', 'name':'XSS', 'icon':''},
                      {'link':'dashboard/corsdemo', 'name':'CORS', 'icon':''},
-                     {'link':'dashboard/csrfdemo', 'name':'CSRF', 'icon':''}]"
+                     {'link':'dashboard/csrfdemo', 'name':'CSRF', 'icon':''},
+                     {'link':'dashboard', 'name':'Index', 'icon':''}]"
         @button-exit-clicked="handleLogout"/>
     </div>
-    <div class="bg-success min-vh-100 p-4 text-center">
-        <h1 class="">This is dashboard</h1>
-        <div v-for="user in usersList">
-            {{ user }}
-        </div>
-        <router-link to="/" class="text-warning"> <i class="bi bi-house"></i> Go home</router-link>
+    <div class="bg-success min-vh-100 text-center">
+        <h1 class="text-center pt-3 mb-2 pb-2 border-bottom border-2">This is dashboard</h1>
+        <router-link to="/login" class="text-warning"><i class="bi bi-box-arrow-in-left"></i> Login page</router-link><br/>
+        <router-link to="/register" class="text-warning"><i class="bi bi-plus-circle"></i> Register page</router-link><br/>
+        <button @click="genComments" class="btn btn-primary mt-2">Generate comments</button>
     </div>
 </template>
 
@@ -28,22 +28,10 @@
         components: {VueSidebarMenuAkahon},
         data() {
             return {
-                usersList: [],
+                
             }
         },
         mounted() {
-            api.get('main/test/')
-            .then(response => {
-                return response.data
-            })
-            .then(data => {
-                this.usersList = data.data
-                console.log(data)
-            })
-            .catch(error => {
-                console.error(error)
-            })
-
         },
         methods: {
             handleLogout() {
@@ -61,7 +49,19 @@
                 .catch(error => {
                 console.error('Error logging out:', error);
                 });
-        }
+        },
+        genComments() {
+                api.post('main/comments/gen/')
+                .then(response => {
+                    return response.data
+                })
+                .then(data => {
+                    alert(data.message);
+                })
+                .catch(error => {
+                    console.warn(error);
+                })
+            }
       }
     }
 </script>

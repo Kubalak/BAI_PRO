@@ -8,11 +8,12 @@
         :menuItems="[{'link':'sqldemo', 'name':'Sql Injection', 'icon':''},
                      {'link':'xssdemo', 'name':'XSS', 'icon':''},
                      {'link':'corsdemo', 'name':'CORS', 'icon':''},
-                     {'link':'csrfdemo', 'name':'CSRF', 'icon':''}]"
+                     {'link':'csrfdemo', 'name':'CSRF', 'icon':''},
+                     {'link':'../dashboard', 'name':'Index', 'icon':''}]"
         @button-exit-clicked="handleLogout"/>
     </div>
-<div>
-    Test SQL!
+<div class="min-vh-100">
+    <h1 class="text-center mt-3 mb-2 pb-2 border-bottom border-2">SQL Injection demo</h1>
 </div>
 
 

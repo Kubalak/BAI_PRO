@@ -2,10 +2,8 @@
 import Footer from './components/Footer.vue';
 </script>
 <template>
-  <div>
     <router-view></router-view>
     <Footer></Footer>
-  </div>
 </template>
 
 <script>

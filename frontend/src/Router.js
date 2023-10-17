@@ -10,11 +10,6 @@ import CsrfDemo from './pages/CsrfDemo.vue';
 
 const routes = [
     {
-        path: "/",
-        name: 'index',
-        component: Index
-    },
-    {
         path: "/login",
         name: "login",
         component: Login
