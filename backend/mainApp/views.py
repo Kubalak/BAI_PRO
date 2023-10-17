@@ -1,7 +1,7 @@
 from django.http import JsonResponse, HttpResponse, HttpRequest
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from .forms import UserForm
-from django.contrib.auth import login, authenticate
+from django.contrib.auth import login, authenticate, logout
 from django.views.decorators.http import require_http_methods
 
 def index(request):
@@ -47,6 +47,11 @@ def login_view(request):
             return JsonResponse({'error':'Invalid username or password'}, status=400)
     except Exception as e:
         return JsonResponse({'error':str(e)}, status=500)
+    
+
+def logout_view(request):
+    logout(request)
+    return JsonResponse({'message':'User logged out'})
 
 @require_http_methods(["GET"])
 def test(request:HttpRequest):

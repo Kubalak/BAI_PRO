@@ -1,4 +1,14 @@
-<template>    
+<template>
+<div>
+<ul class="nav nav-pills nav-fill nav-css">
+      <li class="nav-item">
+        <router-link to="/register" class="nav-link" active-class="active"><i></i>Register</router-link>
+      </li>
+      <li class="nav-item">
+        <router-link to="/login" class="nav-link" active-class="active"><i></i>Login</router-link>
+      </li>
+</ul>
+</div>   
 <div class="d-flex justify-content-center align-items-center text-center min-vh-100 registerForm">  
 <form @submit.prevent="submitForm" class="container-mt5">
     <h1>User Register</h1>

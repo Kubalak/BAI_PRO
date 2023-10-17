@@ -1,22 +1,6 @@
 <script setup>
 import Footer from './components/Footer.vue';
 </script>
-
-<!--ul class="nav nav-pills nav-fill nav-css">
-      <li class="nav-item">
-        <router-link to="/" class="nav-link" active-class="active"><i></i>Home</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link to="/register" class="nav-link" active-class="active"><i></i>Register</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link to="/login" class="nav-link" active-class="active"><i></i>Login</router-link>
-      </li>
-      <li class="nav-item">
-        <router-link to="/dashboard" class="nav-link" active-class="active"><i></i>Dashboard</router-link>
-      </li>
-</ul-->
-
 <template>
   <div>
     <router-view></router-view>
