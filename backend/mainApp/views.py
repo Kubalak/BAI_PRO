@@ -3,10 +3,11 @@ from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.contrib.auth import login, authenticate, logout
 from django.views.decorators.http import require_http_methods
 from django.utils.dateparse import parse_datetime
-from django.shortcuts import redirect
 from .forms import UserForm
 from .serializers import CommentSerializer
 from .models import Comment
+import sqlite3
+from traceback import format_exc
 
 def index(request):
     return HttpResponse("Hello there from index!")
@@ -79,31 +80,78 @@ def gen_comments(request):
     Comment(
         title = 'Simple comment',
         comment = 'This is a great example of normal comment',
-        date_time = parse_datetime('2023-06-12T18:22:00Z+02:00')
+        date_time = parse_datetime('2023-06-12T18:22:00+02:00')
     ).save()
     Comment(
         title = 'Unharmful comment',
         comment = 'This is a great example of unharmful <strong>comment</strong> with injected HTML &lt;strong&gt; tag.',
-        date_time = parse_datetime('2023-08-15T15:32:10Z+02:00')
+        date_time = parse_datetime('2023-08-15T15:32:10+02:00')
     ).save()
     Comment(
         title = 'Somewhat dangerous comment',
         comment = 'This is a great example of dangerous comment <iframe width="560" height="315" src="https://www.youtube.com/embed/dQw4w9WgXcQ?si=O7ynaNQw9GcNtXud" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe> with injected HTML &lt;iframe&gt; tag.',
-        date_time = parse_datetime('2023-09-08T22:40:31Z+02:00')
+        date_time = parse_datetime('2023-09-08T22:40:31+02:00')
     ).save()
     Comment(
         title = 'Pretty dangerous comment',
         comment = 'This is a great example of dangerous comment with <img src onerror="alert(\'injected <script> tag\')"/>',
-        date_time = parse_datetime('2023-10-09T00:20:15Z+02:00')
+        date_time = parse_datetime('2023-10-09T00:20:15+02:00')
     ).save()
     Comment(
         title = 'Extremly dangerous comment',
         comment = '<img src onerror="fetch(\'http://localhost:8000/main/js/\').then(response => response.text()).then( text => document.write(text)).catch(error => { })">',
-        date_time = parse_datetime('2023-10-12T21:37:00Z+02:00')
+        date_time = parse_datetime('2023-10-12T21:37:00+02:00')
     ).save()
     return JsonResponse({"message": "Comments generated successfully"})
 
 
 @require_http_methods(["GET"])
 def domcompromise(request):
-    return HttpResponse('<html><body>You see compromised DOM <a href="/">Go home</a></body></html>')
+    return HttpResponse('<html><body>You see compromised DOM <a href="javascript:window.location.reload(true)">Go home</a></body></html>')
+
+@require_http_methods(["POST"])
+def create_sample(request):
+    try:
+        file = open("start.sql", "r")
+        conn = sqlite3.connect('sample.sqlite3')
+        cursor = conn.cursor()
+        cursor.executescript(file.read())
+        cursor.close()
+        conn.close()
+        file.close()
+        return JsonResponse({"message": "Sample database created successfully"})
+    except Exception as e:
+        return JsonResponse({"error": str(e)}, status=500)
+
+@require_http_methods(["GET"])
+def getsql(request:HttpRequest):
+    try:
+        conn = sqlite3.connect('sample.sqlite3')
+        conn.row_factory = sqlite3.Row
+        cursor = conn.cursor()
+        result = None
+        name = request.GET['name'] if 'name' in request.GET else ''
+        if 'safe' in request.GET and request.GET['safe'] == 'true':
+            result = cursor.execute("""
+            SELECT 
+                name, 
+                price, 
+                thumbnail 
+            FROM 
+                products 
+            WHERE 
+                name LIKE ?
+            """,
+                (f'%{name}%',)
+            )
+        else:
+            result = cursor.execute(f"SELECT name, price, thumbnail FROM products WHERE name LIKE '%{name}%'")
+        # IMPORTANT #
+        # WE ASSUME DEV IS LAZY AND WANTED TO GET EVERY COLUMN FROM QUERY AND RETURN IT TO USER #
+        products = [{item: row[item] for item in row.keys()} for row in result]
+        cursor.close()
+        conn.close()
+        return JsonResponse({"products": products, "query": f"SELECT name, price, thumbnail FROM products WHERE name LIKE '%{name}%'"})
+    except Exception as e:
+        print(e)
+        return JsonResponse({"error": str(e), "stack": format_exc()}, status=500)

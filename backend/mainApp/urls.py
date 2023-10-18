@@ -9,5 +9,7 @@ urlpatterns = [
     path("islogin/", views.islogin),
     path("comments/", views.comments),
     path("comments/gen/", views.gen_comments),
-    path("js/", views.domcompromise)
+    path("js/", views.domcompromise),
+    path("sqlgen/", views.create_sample),
+    path("sqldemo/", views.getsql)
 ]
