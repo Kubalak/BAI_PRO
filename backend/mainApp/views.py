@@ -4,6 +4,9 @@ from django.contrib.auth import login, authenticate, logout
 from django.views.decorators.http import require_http_methods
 from django.utils.dateparse import parse_datetime
 from .forms import UserForm
+from django.template.loader import get_template
+from django.core.mail import EmailMultiAlternatives
+from backend import settings
 from .serializers import CommentSerializer
 from .models import Comment
 import sqlite3
@@ -155,3 +158,22 @@ def getsql(request:HttpRequest):
     except Exception as e:
         print(e)
         return JsonResponse({"error": str(e), "stack": format_exc()}, status=500)
+
+# @require_http_methods(['POST']) # LAZY DEV DIDN'T SELECT REQUIRED METHOD
+def render_mail(request:HttpRequest):
+    if not request.user.is_authenticated:
+        return JsonResponse({"error": "Unauthorized. Please log in first!"}, status=401)
+    try:
+        html = get_template('email.html')
+        txt = get_template('email.txt')
+        subject, _from, to = 'Important information', settings.EMAIL_HOST_USER, request.user.email
+        html_content = html.render({'username': request.user.username})
+        text_content = txt.render({'username': request.user.username})
+        msg = EmailMultiAlternatives(subject, text_content, _from, [to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+    except Exception as e:
+        print(e)
+        return JsonResponse({"error": "Unable to send email!"}, status=500)
+ 
+    return JsonResponse({"message": "Email sent successfully!"})

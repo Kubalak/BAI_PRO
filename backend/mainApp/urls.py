@@ -11,5 +11,6 @@ urlpatterns = [
     path("comments/gen/", views.gen_comments),
     path("js/", views.domcompromise),
     path("sqlgen/", views.create_sample),
-    path("sqldemo/", views.getsql)
+    path("sqldemo/", views.getsql),
+    path("subscribe/", views.render_mail)
 ]
