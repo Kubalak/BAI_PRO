@@ -7,13 +7,13 @@ from .forms import UserForm
 from django.template.loader import get_template
 from django.core.mail import EmailMultiAlternatives
 from backend import settings
+from traceback import format_exc
 from .serializers import CommentSerializer
 from .models import Comment
+from .decorators import require_login
 import sqlite3
-from traceback import format_exc
 
-def index(request):
-    return HttpResponse("Hello there from index!")
+
 
 @require_http_methods(['POST'])
 def register_view(request):
@@ -55,8 +55,9 @@ def login_view(request):
             return JsonResponse({'error':'Invalid username or password'}, status=400)
     except Exception as e:
         return JsonResponse({'error':str(e)}, status=500)
+ 
     
-
+@require_http_methods(["POST"])
 def logout_view(request):
     logout(request)
     return JsonResponse({'message':'User logged out'})
@@ -69,14 +70,14 @@ def islogin(request):
 
 
 @require_http_methods(['GET'])
+@require_login
 def comments(request:HttpRequest):
-    if not request.user.is_authenticated:
-        return JsonResponse({"error": "Please log in first!"}, status=401)
     return JsonResponse({"comments": CommentSerializer(Comment.objects.all(), many=True).data})
 
 
 @require_http_methods(['POST'])
 @csrf_exempt
+@require_login
 def gen_comments(request):
     if Comment.objects.count() >= 5:
         return JsonResponse({"message": "Already created"})
@@ -109,10 +110,14 @@ def gen_comments(request):
 
 
 @require_http_methods(["GET"])
+# No @require_login -> We simulate hackers website where no login is required.
 def domcompromise(request):
-    return HttpResponse('<html><body>You see compromised DOM <a href="javascript:window.location.reload(true)">Go home</a></body></html>')
+    page = get_template("dom.html")
+    return HttpResponse(page.render())
+
 
 @require_http_methods(["POST"])
+@require_login
 def create_sample(request):
     try:
         file = open("start.sql", "r")
@@ -126,7 +131,9 @@ def create_sample(request):
     except Exception as e:
         return JsonResponse({"error": str(e)}, status=500)
 
+
 @require_http_methods(["GET"])
+@require_login
 def getsql(request:HttpRequest):
     try:
         conn = sqlite3.connect('sample.sqlite3')
@@ -159,7 +166,9 @@ def getsql(request:HttpRequest):
         print(e)
         return JsonResponse({"error": str(e), "stack": format_exc()}, status=500)
 
-# @require_http_methods(['POST']) # LAZY DEV DIDN'T SELECT REQUIRED METHOD
+
+# @require_http_methods(['POST']) # LAZY DEV DIDN'T ADD REQUIRED METHOD
+@require_login # CSRF attack will be successfull - web browser sends cookies by default.
 def render_mail(request:HttpRequest):
     if not request.user.is_authenticated:
         return JsonResponse({"error": "Unauthorized. Please log in first!"}, status=401)
