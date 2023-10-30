@@ -1,8 +1,8 @@
 <template>
     <div>
     <VueSidebarMenuAkahon 
-        isUsedVueRouter=true
-        isMenuOpen=true
+        :isUsedVueRouter=true
+        :isMenuOpen=true
         menuTitle='Demo Panel'
         profileName="Patryk Jaworski"
         :menuItems="[{'link':'sqldemo', 'name':'Sql Injection', 'icon':''},

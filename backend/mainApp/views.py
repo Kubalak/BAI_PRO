@@ -1,4 +1,5 @@
 from django.http import JsonResponse, HttpResponse, HttpRequest
+from django_otp.plugins.otp_totp.models import TOTPDevice
 from django.views.decorators.csrf import csrf_exempt, ensure_csrf_cookie
 from django.contrib.auth import login, authenticate, logout
 from django.views.decorators.http import require_http_methods
@@ -9,39 +10,69 @@ from django.core.mail import EmailMultiAlternatives
 from backend import settings
 from traceback import format_exc
 from .serializers import CommentSerializer
-from .models import Comment
+from .models import Comment, UserProfile
 from .decorators import require_login
 import sqlite3
-
-
+import qrcode
+from io import BytesIO
+from base64 import b64encode
 
 @require_http_methods(['POST'])
 def register_view(request):
-    
     try:
         username = request.POST.get('username')
         email = request.POST.get('email')
         password1 = request.POST.get('password1')
         password2 = request.POST.get('password2')
-        
+        enable_2fa = request.POST.get('enable_2fa') == 'true'
+
         form = UserForm({
-                'username': username,
-                'email': email,
-                'password1': password1,
-                'password2': password2
+            'username': username,
+            'email': email,
+            'password1': password1,
+            'password2': password2
         })
-        
+
         if form.is_valid():
-            form.save()
-            return JsonResponse({'message': 'User registered successfully.'})
+            user = form.save()
+
+            if enable_2fa:
+                # Create a UserProfile for the user and set 2FA options in it.
+                profile, created = UserProfile.objects.get_or_create(user=user)
+
+                if not profile.totp_device:
+                    # Create a TOTP device
+                    totp_device = TOTPDevice.objects.create(user=user, confirmed=False)
+                    totp_device.save()
+                    profile.totp_device = totp_device
+                    profile.enable_2fa = enable_2fa
+                    profile.save()
+        
+                    qr_code_img = qrcode.make(totp_device.config_url)  # This should be the device for which you want to generate the QR code
+                    buffer = BytesIO()
+                    qr_code_img.save(buffer)
+                    buffer.seek(0)
+                    encoded_img = b64encode(buffer.read()).decode()
+                    qr_code_data = f'data:image/png;base64,{encoded_img}'
+
+                    # Prepare the response with the QR code image data
+                    response_data = {
+                    'message': 'User registered successfully',
+                    'image_data': qr_code_data
+                    }
+                else:
+                    response_data = {'message': 'User registered successfully (2FA was already enabled)'}
+            else:
+                response_data = {'message': 'User registered successfully (2FA is disabled)'}
         else:
             return JsonResponse({'error': form.errors}, status=400)
 
+        return JsonResponse(response_data)
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
     
-@require_http_methods(["POST"])
+@require_http_methods(['POST'])
 def login_view(request):
     try:
         username = request.POST.get('username')
@@ -49,12 +80,39 @@ def login_view(request):
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
-            login(request,user)
-            return JsonResponse({'message':'User logged in sucessfully'})
+            requires_2fa = False
+
+            # Check if the user has 2FA enabled in their profile.
+            try:
+                user_profile = UserProfile.objects.get(user=user)
+                if user_profile.enable_2fa:
+                    requires_2fa = True
+            except UserProfile.DoesNotExist:
+                pass
+
+            if requires_2fa:
+                # 2FA is required. Check if the TOTP code is provided.
+                totp_code = request.POST.get('totp_code')
+                if totp_code:
+                    try:
+                        totp_device = TOTPDevice.objects.get(user=user)
+                        if totp_device.verify_token(totp_code):
+                            login(request, user)
+                            return JsonResponse({'message': 'User logged in successfully'})
+                        else:
+                            return JsonResponse({'error': 'Invalid 2FA code'}, status=400)
+                    except TOTPDevice.DoesNotExist:
+                        return JsonResponse({'error': '2FA device not found'}, status=400)
+                else:
+                    return JsonResponse({'requires_2fa': True})
+            else:
+                # 2FA is not required; proceed with the regular login.
+                login(request, user)
+                return JsonResponse({'message': 'User logged in successfully'})
         else:
-            return JsonResponse({'error':'Invalid username or password'}, status=400)
+            return JsonResponse({'error': 'Invalid username or password'}, status=400)
     except Exception as e:
-        return JsonResponse({'error':str(e)}, status=500)
+        return JsonResponse({'error': str(e)}, status=500)
  
     
 @require_http_methods(["POST"])
