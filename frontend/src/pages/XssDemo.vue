@@ -7,7 +7,6 @@
         profileName="Patryk Jaworski"
         :menuItems="[{'link':'sqldemo', 'name':'Sql Injection', 'icon':''},
                      {'link':'xssdemo', 'name':'XSS', 'icon':''},
-                     {'link':'corsdemo', 'name':'CORS', 'icon':''},
                      {'link':'csrfdemo', 'name':'CSRF', 'icon':''},
                      {'link':'../dashboard', 'name':'Index', 'icon':''}]"
         @button-exit-clicked="handleLogout"/>
