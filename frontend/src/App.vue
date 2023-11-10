@@ -28,9 +28,6 @@ export default {
       const show = ((this.$route.path !== '/login') && (this.$route.path !== '/register'))
         if(!show){
           document.body.style.paddingLeft = '0px';
-          const elements = document.querySelectorAll('span.tooltip');
-          for(var i = 0; i < elements.length; ++i)
-            elements[i].remove();
           
         }
         return show;
