@@ -18,7 +18,7 @@ from io import BytesIO
 from base64 import b64encode
 
 @require_http_methods(['POST'])
-def register_view(request):
+def register_view(request):    
     try:
         username = request.POST.get('username')
         email = request.POST.get('email')
@@ -48,7 +48,15 @@ def register_view(request):
                     profile.enable_2fa = enable_2fa
                     profile.save()
         
-                    qr_code_img = qrcode.make(totp_device.config_url)  # This should be the device for which you want to generate the QR code
+                    qr = qrcode.QRCode(
+                        version=1,
+                        error_correction=qrcode.constants.ERROR_CORRECT_L,
+                        box_size=10,
+                        border=0
+                    )
+                    qr.add_data(totp_device.config_url)
+                    qr.make(fit=True)
+                    qr_code_img = qr.make_image(fill_color=(66, 184, 131), back_color=(18,18,18))
                     buffer = BytesIO()
                     qr_code_img.save(buffer)
                     buffer.seek(0)

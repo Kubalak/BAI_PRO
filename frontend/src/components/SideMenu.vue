@@ -39,6 +39,12 @@ export default{
                 console.error('Error logging out:', error);
                 });
         },
+    },
+    mounted() {
+        // Usuwa elementy tooltip psujące układ strony
+        const elements = document.querySelectorAll('span.tooltip');
+          for(var i = 0; i < elements.length; ++i)
+            elements[i].remove();
     }
 }
 </script>

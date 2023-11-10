@@ -9,7 +9,11 @@
       </li>
   </ul>
   </div>
-  <div class="d-flex justify-content-center align-items-center text-center min-vh-100 registerForm">
+  <div class="d-flex flex-column justify-content-center align-items-center text-center min-vh-100 registerForm">
+      <div v-if= "qrCodeImage" class="pt-2">
+            <h3> Register Sucessfull!<br/>Scan this code with your Authenticator App.<br/> Be carefull it only shows once per register!</h3> <br>
+          <img :src="qrCodeImage" alt="QR Code for 2FA" />
+      </div>
       <form @submit.prevent="submitForm" class="container-mt5">
           <h1>User Register</h1>
           <div class="form-group">
@@ -38,10 +42,7 @@
               </button>
           </div>
       </form>
-      <div v-if= "qrCodeImage">
-            <H2> Register Sucessfull scan this code with your Authenticator App, be carefull it only shows once per register!</H2> <br>
-          <img :src="qrCodeImage" alt="QR Code for 2FA" />
-      </div>
+
   </div>
 </template>
   

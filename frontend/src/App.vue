@@ -2,12 +2,11 @@
 import Footer from './components/Footer.vue';
 import api from './getAxios';
 import SideMenu from './components/SideMenu.vue';
-import {ref, onMounted} from 'vue';
 
-const renderSidebar = ref(true);
+
 </script>
 <template>
-    <SideMenu v-if="renderSidebar"></SideMenu>
+    <SideMenu v-if="showSidebar()"></SideMenu>
     <router-view></router-view>
     <Footer></Footer>
 </template>
@@ -17,35 +16,41 @@ const renderSidebar = ref(true);
 export default {
   name: "App",
   //TODO: Sprawdzić czy faktycznie działą
-
-  setup() {
-    const router = useRouter();
-  
-    onBeforeRouteUpdate((to, from, next) => {
-      const shouldRenderSidebar = to.path !== '/login';
-      renderSidebar.value = shouldRenderSidebar;
-      console.log(router.currentRoute)
-      next();
-    }),
-
-    onMounted(() => {
-      renderSidebar.value = router.currentRoute.value.path !== '/login';
-    });
+  data () {
+    return {
+    }
   },
 
+  setup() {
+  },
+  methods:{
+    showSidebar() {
+      const show = ((this.$route.path !== '/login') && (this.$route.path !== '/register'))
+        if(!show){
+          document.body.style.paddingLeft = '0px';
+          const elements = document.querySelectorAll('span.tooltip');
+          for(var i = 0; i < elements.length; ++i)
+            elements[i].remove();
+          
+        }
+        return show;
+      }
+  },
   mounted() {
-    console.log()
     api.get('main/islogin/')
       .then(response => {
         return response.data
       })
       .then(data => {
-        if (!data.authenticated && this.$route.path != '/login')
+        if (!data.authenticated && this.$route.path !== '/login')
           this.$router.push('/login')
       })
       .catch(error => {
         console.error(error)
       })
   },
+  computed: {
+      
+  }
 }
 </script>
