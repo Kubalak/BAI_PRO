@@ -14,10 +14,10 @@ import routes from './Router';
 // createApp(App).mount('#app')
 const router = createRouter({
     history: createWebHashHistory(),
-    routes: [
-        ...routes
-    ],
+    routes: routes,
 })
+
+
 
 const app = createApp(App);
 
