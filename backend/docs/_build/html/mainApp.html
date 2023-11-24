@@ -129,7 +129,7 @@
 <span id="mainapp-apps-module"></span><h2>mainApp.apps module<a class="headerlink" href="#module-mainApp.apps" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="mainApp.apps.MainappConfig">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mainApp.apps.</span></span><span class="sig-name descname"><span class="pre">MainappConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainApp.apps.MainappConfig" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mainApp.apps.</span></span><span class="sig-name descname"><span class="pre">MainappConfig</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app_name</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">app_module</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainApp/apps.html#MainappConfig"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.apps.MainappConfig" title="Link to this definition"></a></dt>
 <dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">AppConfig</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mainApp.apps.MainappConfig.default_auto_field">
@@ -148,7 +148,7 @@
 <span id="mainapp-decorators-module"></span><h2>mainApp.decorators module<a class="headerlink" href="#module-mainApp.decorators" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="mainApp.decorators.require_login">
-<span class="sig-prename descclassname"><span class="pre">mainApp.decorators.</span></span><span class="sig-name descname"><span class="pre">require_login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainApp.decorators.require_login" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mainApp.decorators.</span></span><span class="sig-name descname"><span class="pre">require_login</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">func</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainApp/decorators.html#require_login"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.decorators.require_login" title="Link to this definition"></a></dt>
 <dd><p>Sprawdza, czy użytkownik jest zalogowany. Zwraca 401 z komunikatem błędu JSON, jeśli użytkownik nie jest zalogowany.</p>
 </dd></dl>
 
@@ -157,13 +157,13 @@
 <span id="mainapp-forms-module"></span><h2>mainApp.forms module<a class="headerlink" href="#module-mainApp.forms" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="mainApp.forms.UserForm">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mainApp.forms.</span></span><span class="sig-name descname"><span class="pre">UserForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainApp.forms.UserForm" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mainApp.forms.</span></span><span class="sig-name descname"><span class="pre">UserForm</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainApp/forms.html#UserForm"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.forms.UserForm" title="Link to this definition"></a></dt>
 <dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">UserCreationForm</span></code></p>
 <p>Formularz rejestracji użytkownika z możliwością włączenia uwierzytelniania dwuetapowego.</p>
 <p>Dziedziczy po klasie UserCreationForm i dodaje pole <cite>email</cite> oraz <cite>enable_2fa</cite> do standardowego formularza rejestracji.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="mainApp.forms.UserForm.Meta">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="headerlink" href="#mainApp.forms.UserForm.Meta" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/mainApp/forms.html#UserForm.Meta"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.forms.UserForm.Meta" title="Link to this definition"></a></dt>
 <dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mainApp.forms.UserForm.Meta.fields">
@@ -196,7 +196,7 @@
 
 <dl class="py method">
 <dt class="sig sig-object py" id="mainApp.forms.UserForm.save">
-<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainApp.forms.UserForm.save" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">save</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">commit</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainApp/forms.html#UserForm.save"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.forms.UserForm.save" title="Link to this definition"></a></dt>
 <dd><p>Zapisuje użytkownika oraz, jeśli włączono uwierzytelnianie dwuetapowe,
 tworzy i zapisuje urządzenie TOTP dla tego użytkownika.</p>
 <p>Args:
@@ -212,7 +212,7 @@ User: Obiekt użytkownika, który został zapisany.</p>
 <span id="mainapp-models-module"></span><h2>mainApp.models module<a class="headerlink" href="#module-mainApp.models" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="mainApp.models.Comment">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mainApp.models.</span></span><span class="sig-name descname"><span class="pre">Comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainApp.models.Comment" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mainApp.models.</span></span><span class="sig-name descname"><span class="pre">Comment</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainApp/models.html#Comment"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.models.Comment" title="Link to this definition"></a></dt>
 <dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
 <p>Model reprezentujący komentarze.</p>
 <p>Atrybuty:
@@ -278,7 +278,7 @@ object the first time, the query is executed.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="mainApp.models.UserProfile">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mainApp.models.</span></span><span class="sig-name descname"><span class="pre">UserProfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainApp.models.UserProfile" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mainApp.models.</span></span><span class="sig-name descname"><span class="pre">UserProfile</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainApp/models.html#UserProfile"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.models.UserProfile" title="Link to this definition"></a></dt>
 <dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">Model</span></code></p>
 <p>Model reprezentujący profil użytkownika.</p>
 <p>Atrybuty:
@@ -357,11 +357,17 @@ object the first time, the query is executed.</p>
 <span id="mainapp-serializers-module"></span><h2>mainApp.serializers module<a class="headerlink" href="#module-mainApp.serializers" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="mainApp.serializers.CommentSerializer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mainApp.serializers.</span></span><span class="sig-name descname"><span class="pre">CommentSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainApp.serializers.CommentSerializer" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">mainApp.serializers.</span></span><span class="sig-name descname"><span class="pre">CommentSerializer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainApp/serializers.html#CommentSerializer"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.serializers.CommentSerializer" title="Link to this definition"></a></dt>
 <dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">ModelSerializer</span></code></p>
+<p>Serializer dla modelu Comment.</p>
+<p>Mapuje pola modelu Comment na format JSON i obsługuje walidację danych wejściowych.</p>
+<p>Fields:
+- title (str): Tytuł komentarza.
+- date_time (datetime): Data i czas utworzenia komentarza.
+- comment (str): Treść komentarza.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="mainApp.serializers.CommentSerializer.Meta">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="headerlink" href="#mainApp.serializers.CommentSerializer.Meta" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">Meta</span></span><a class="reference internal" href="_modules/mainApp/serializers.html#CommentSerializer.Meta"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.serializers.CommentSerializer.Meta" title="Link to this definition"></a></dt>
 <dd><p>Klasy bazowe: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="mainApp.serializers.CommentSerializer.Meta.fields">
@@ -406,7 +412,7 @@ object the first time, the query is executed.</p>
 <span id="mainapp-views-module"></span><h2>mainApp.views module<a class="headerlink" href="#module-mainApp.views" title="Link to this heading"></a></h2>
 <dl class="py function">
 <dt class="sig sig-object py" id="mainApp.views.domcompromise">
-<span class="sig-prename descclassname"><span class="pre">mainApp.views.</span></span><span class="sig-name descname"><span class="pre">domcompromise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainApp.views.domcompromise" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mainApp.views.</span></span><span class="sig-name descname"><span class="pre">domcompromise</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainApp/views.html#domcompromise"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.views.domcompromise" title="Link to this definition"></a></dt>
 <dd><p>Endpoint do demonstracji kompromitacji DOM.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parametry<span class="colon">:</span></dt>
@@ -420,7 +426,7 @@ object the first time, the query is executed.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mainApp.views.islogin">
-<span class="sig-prename descclassname"><span class="pre">mainApp.views.</span></span><span class="sig-name descname"><span class="pre">islogin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainApp.views.islogin" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mainApp.views.</span></span><span class="sig-name descname"><span class="pre">islogin</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainApp/views.html#islogin"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.views.islogin" title="Link to this definition"></a></dt>
 <dd><p>Sprawdza stan zalogowania użytkownika.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parametry<span class="colon">:</span></dt>
@@ -434,7 +440,7 @@ object the first time, the query is executed.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mainApp.views.login_view">
-<span class="sig-prename descclassname"><span class="pre">mainApp.views.</span></span><span class="sig-name descname"><span class="pre">login_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainApp.views.login_view" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mainApp.views.</span></span><span class="sig-name descname"><span class="pre">login_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainApp/views.html#login_view"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.views.login_view" title="Link to this definition"></a></dt>
 <dd><p>Loguje użytkownika.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parametry<span class="colon">:</span></dt>
@@ -448,7 +454,7 @@ object the first time, the query is executed.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mainApp.views.logout_view">
-<span class="sig-prename descclassname"><span class="pre">mainApp.views.</span></span><span class="sig-name descname"><span class="pre">logout_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainApp.views.logout_view" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mainApp.views.</span></span><span class="sig-name descname"><span class="pre">logout_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainApp/views.html#logout_view"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.views.logout_view" title="Link to this definition"></a></dt>
 <dd><p>Wylogowuje użytkownika.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parametry<span class="colon">:</span></dt>
@@ -462,7 +468,7 @@ object the first time, the query is executed.</p>
 
 <dl class="py function">
 <dt class="sig sig-object py" id="mainApp.views.register_view">
-<span class="sig-prename descclassname"><span class="pre">mainApp.views.</span></span><span class="sig-name descname"><span class="pre">register_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#mainApp.views.register_view" title="Link to this definition"></a></dt>
+<span class="sig-prename descclassname"><span class="pre">mainApp.views.</span></span><span class="sig-name descname"><span class="pre">register_view</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">request</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/mainApp/views.html#register_view"><span class="viewcode-link"><span class="pre">[źródło]</span></span></a><a class="headerlink" href="#mainApp.views.register_view" title="Link to this definition"></a></dt>
 <dd><p>Rejestruje nowego użytkownika.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parametry<span class="colon">:</span></dt>
