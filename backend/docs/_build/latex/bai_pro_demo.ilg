@@ -1,0 +1,7 @@
+This is makeindex, version 2.15 [TeX Live 2022/dev] (kpathsea + Thai support).
+Scanning style file ./python.ist.......done (7 attributes redefined, 0 ignored).
+Scanning input file bai_pro_demo.idx....done (75 entries accepted, 0 rejected).
+Sorting entries....done (497 comparisons).
+Generating output file bai_pro_demo.ind....done (148 lines written, 0 warnings).
+Output written in bai_pro_demo.ind.
+Transcript written in bai_pro_demo.ilg.

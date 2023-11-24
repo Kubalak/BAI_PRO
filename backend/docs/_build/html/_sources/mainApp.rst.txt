@@ -7,10 +7,14 @@ Submodules
 mainApp.admin module
 --------------------
 
+
 .. automodule:: mainApp.admin
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. literalinclude:: ../mainApp/admin.py
+   :language: Python
 
 mainApp.apps module
 -------------------
@@ -20,6 +24,9 @@ mainApp.apps module
    :undoc-members:
    :show-inheritance:
 
+.. literalinclude:: ../mainApp/apps.py
+   :language: Python
+
 mainApp.decorators module
 -------------------------
 
@@ -27,6 +34,9 @@ mainApp.decorators module
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. literalinclude:: ../mainApp/decorators.py
+   :language: Python
 
 mainApp.forms module
 --------------------
@@ -36,6 +46,9 @@ mainApp.forms module
    :undoc-members:
    :show-inheritance:
 
+.. literalinclude:: ../mainApp/forms.py
+   :language: Python
+
 mainApp.models module
 ---------------------
 
@@ -43,6 +56,9 @@ mainApp.models module
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. literalinclude:: ../mainApp/models.py
+   :language: Python
 
 mainApp.serializers module
 --------------------------
@@ -52,6 +68,9 @@ mainApp.serializers module
    :undoc-members:
    :show-inheritance:
 
+.. literalinclude:: ../mainApp/serializers.py
+   :language: Python
+
 mainApp.tests module
 --------------------
 
@@ -60,6 +79,9 @@ mainApp.tests module
    :undoc-members:
    :show-inheritance:
 
+.. literalinclude:: ../mainApp/tests.py
+   :language: Python
+   
 mainApp.urls module
 -------------------
 
@@ -68,6 +90,9 @@ mainApp.urls module
    :undoc-members:
    :show-inheritance:
 
+.. literalinclude:: ../mainApp/urls.py
+   :language: Python
+
 mainApp.views module
 --------------------
 
@@ -75,6 +100,9 @@ mainApp.views module
    :members:
    :undoc-members:
    :show-inheritance:
+
+.. literalinclude:: ../mainApp/views.py
+   :language: Python
 
 Module contents
 ---------------

@@ -1,0 +1,75 @@
+\indexentry{module@\spxentry{module}!backend.asgi@\spxentry{backend.asgi}|hyperpage}{1}
+\indexentry{backend.asgi@\spxentry{backend.asgi}!module@\spxentry{module}|hyperpage}{1}
+\indexentry{module@\spxentry{module}!backend.settings@\spxentry{backend.settings}|hyperpage}{2}
+\indexentry{backend.settings@\spxentry{backend.settings}!module@\spxentry{module}|hyperpage}{2}
+\indexentry{module@\spxentry{module}!backend.urls@\spxentry{backend.urls}|hyperpage}{5}
+\indexentry{backend.urls@\spxentry{backend.urls}!module@\spxentry{module}|hyperpage}{5}
+\indexentry{module@\spxentry{module}!backend.wsgi@\spxentry{backend.wsgi}|hyperpage}{6}
+\indexentry{backend.wsgi@\spxentry{backend.wsgi}!module@\spxentry{module}|hyperpage}{6}
+\indexentry{module@\spxentry{module}!backend@\spxentry{backend}|hyperpage}{7}
+\indexentry{backend@\spxentry{backend}!module@\spxentry{module}|hyperpage}{7}
+\indexentry{module@\spxentry{module}!mainApp.admin@\spxentry{mainApp.admin}|hyperpage}{7}
+\indexentry{mainApp.admin@\spxentry{mainApp.admin}!module@\spxentry{module}|hyperpage}{7}
+\indexentry{module@\spxentry{module}!mainApp.apps@\spxentry{mainApp.apps}|hyperpage}{7}
+\indexentry{mainApp.apps@\spxentry{mainApp.apps}!module@\spxentry{module}|hyperpage}{7}
+\indexentry{MainappConfig (klasa w module mainApp.apps)@\spxentry{MainappConfig}\spxextra{klasa w module mainApp.apps}|hyperpage}{7}
+\indexentry{default\_auto\_field (mainApp.apps.MainappConfig atrybut)@\spxentry{default\_auto\_field}\spxextra{mainApp.apps.MainappConfig atrybut}|hyperpage}{7}
+\indexentry{name (mainApp.apps.MainappConfig atrybut)@\spxentry{name}\spxextra{mainApp.apps.MainappConfig atrybut}|hyperpage}{7}
+\indexentry{module@\spxentry{module}!mainApp.decorators@\spxentry{mainApp.decorators}|hyperpage}{8}
+\indexentry{mainApp.decorators@\spxentry{mainApp.decorators}!module@\spxentry{module}|hyperpage}{8}
+\indexentry{require\_login() (w module mainApp.decorators)@\spxentry{require\_login()}\spxextra{w module mainApp.decorators}|hyperpage}{8}
+\indexentry{module@\spxentry{module}!mainApp.forms@\spxentry{mainApp.forms}|hyperpage}{8}
+\indexentry{mainApp.forms@\spxentry{mainApp.forms}!module@\spxentry{module}|hyperpage}{8}
+\indexentry{UserForm (klasa w module mainApp.forms)@\spxentry{UserForm}\spxextra{klasa w module mainApp.forms}|hyperpage}{8}
+\indexentry{UserForm.Meta (klasa w module mainApp.forms)@\spxentry{UserForm.Meta}\spxextra{klasa w module mainApp.forms}|hyperpage}{8}
+\indexentry{fields (mainApp.forms.UserForm.Meta atrybut)@\spxentry{fields}\spxextra{mainApp.forms.UserForm.Meta atrybut}|hyperpage}{8}
+\indexentry{model (mainApp.forms.UserForm.Meta atrybut)@\spxentry{model}\spxextra{mainApp.forms.UserForm.Meta atrybut}|hyperpage}{8}
+\indexentry{base\_fields (mainApp.forms.UserForm atrybut)@\spxentry{base\_fields}\spxextra{mainApp.forms.UserForm atrybut}|hyperpage}{8}
+\indexentry{declared\_fields (mainApp.forms.UserForm atrybut)@\spxentry{declared\_fields}\spxextra{mainApp.forms.UserForm atrybut}|hyperpage}{8}
+\indexentry{media (mainApp.forms.UserForm property)@\spxentry{media}\spxextra{mainApp.forms.UserForm property}|hyperpage}{9}
+\indexentry{save() (mainApp.forms.UserForm metoda)@\spxentry{save()}\spxextra{mainApp.forms.UserForm metoda}|hyperpage}{9}
+\indexentry{module@\spxentry{module}!mainApp.models@\spxentry{mainApp.models}|hyperpage}{10}
+\indexentry{mainApp.models@\spxentry{mainApp.models}!module@\spxentry{module}|hyperpage}{10}
+\indexentry{Comment (klasa w module mainApp.models)@\spxentry{Comment}\spxextra{klasa w module mainApp.models}|hyperpage}{10}
+\indexentry{Comment.DoesNotExist@\spxentry{Comment.DoesNotExist}|hyperpage}{10}
+\indexentry{Comment.MultipleObjectsReturned@\spxentry{Comment.MultipleObjectsReturned}|hyperpage}{10}
+\indexentry{comment (mainApp.models.Comment atrybut)@\spxentry{comment}\spxextra{mainApp.models.Comment atrybut}|hyperpage}{10}
+\indexentry{date\_time (mainApp.models.Comment atrybut)@\spxentry{date\_time}\spxextra{mainApp.models.Comment atrybut}|hyperpage}{10}
+\indexentry{get\_next\_by\_date\_time() (mainApp.models.Comment metoda)@\spxentry{get\_next\_by\_date\_time()}\spxextra{mainApp.models.Comment metoda}|hyperpage}{10}
+\indexentry{get\_previous\_by\_date\_time() (mainApp.models.Comment metoda)@\spxentry{get\_previous\_by\_date\_time()}\spxextra{mainApp.models.Comment metoda}|hyperpage}{10}
+\indexentry{id (mainApp.models.Comment atrybut)@\spxentry{id}\spxextra{mainApp.models.Comment atrybut}|hyperpage}{11}
+\indexentry{objects (mainApp.models.Comment atrybut)@\spxentry{objects}\spxextra{mainApp.models.Comment atrybut}|hyperpage}{11}
+\indexentry{title (mainApp.models.Comment atrybut)@\spxentry{title}\spxextra{mainApp.models.Comment atrybut}|hyperpage}{11}
+\indexentry{UserProfile (klasa w module mainApp.models)@\spxentry{UserProfile}\spxextra{klasa w module mainApp.models}|hyperpage}{11}
+\indexentry{UserProfile.DoesNotExist@\spxentry{UserProfile.DoesNotExist}|hyperpage}{11}
+\indexentry{UserProfile.MultipleObjectsReturned@\spxentry{UserProfile.MultipleObjectsReturned}|hyperpage}{11}
+\indexentry{enable\_2fa (mainApp.models.UserProfile atrybut)@\spxentry{enable\_2fa}\spxextra{mainApp.models.UserProfile atrybut}|hyperpage}{11}
+\indexentry{id (mainApp.models.UserProfile atrybut)@\spxentry{id}\spxextra{mainApp.models.UserProfile atrybut}|hyperpage}{11}
+\indexentry{objects (mainApp.models.UserProfile atrybut)@\spxentry{objects}\spxextra{mainApp.models.UserProfile atrybut}|hyperpage}{11}
+\indexentry{totp\_device (mainApp.models.UserProfile atrybut)@\spxentry{totp\_device}\spxextra{mainApp.models.UserProfile atrybut}|hyperpage}{11}
+\indexentry{totp\_device\_id (mainApp.models.UserProfile atrybut)@\spxentry{totp\_device\_id}\spxextra{mainApp.models.UserProfile atrybut}|hyperpage}{11}
+\indexentry{user (mainApp.models.UserProfile atrybut)@\spxentry{user}\spxextra{mainApp.models.UserProfile atrybut}|hyperpage}{11}
+\indexentry{user\_id (mainApp.models.UserProfile atrybut)@\spxentry{user\_id}\spxextra{mainApp.models.UserProfile atrybut}|hyperpage}{12}
+\indexentry{module@\spxentry{module}!mainApp.serializers@\spxentry{mainApp.serializers}|hyperpage}{13}
+\indexentry{mainApp.serializers@\spxentry{mainApp.serializers}!module@\spxentry{module}|hyperpage}{13}
+\indexentry{CommentSerializer (klasa w module mainApp.serializers)@\spxentry{CommentSerializer}\spxextra{klasa w module mainApp.serializers}|hyperpage}{13}
+\indexentry{CommentSerializer.Meta (klasa w module mainApp.serializers)@\spxentry{CommentSerializer.Meta}\spxextra{klasa w module mainApp.serializers}|hyperpage}{13}
+\indexentry{fields (mainApp.serializers.CommentSerializer.Meta atrybut)@\spxentry{fields}\spxextra{mainApp.serializers.CommentSerializer.Meta atrybut}|hyperpage}{13}
+\indexentry{model (mainApp.serializers.CommentSerializer.Meta atrybut)@\spxentry{model}\spxextra{mainApp.serializers.CommentSerializer.Meta atrybut}|hyperpage}{13}
+\indexentry{module@\spxentry{module}!mainApp.tests@\spxentry{mainApp.tests}|hyperpage}{14}
+\indexentry{mainApp.tests@\spxentry{mainApp.tests}!module@\spxentry{module}|hyperpage}{14}
+\indexentry{module@\spxentry{module}!mainApp.urls@\spxentry{mainApp.urls}|hyperpage}{14}
+\indexentry{mainApp.urls@\spxentry{mainApp.urls}!module@\spxentry{module}|hyperpage}{14}
+\indexentry{urlpatterns (w module mainApp.urls)@\spxentry{urlpatterns}\spxextra{w module mainApp.urls}|hyperpage}{14}
+\indexentry{module@\spxentry{module}!mainApp.views@\spxentry{mainApp.views}|hyperpage}{15}
+\indexentry{mainApp.views@\spxentry{mainApp.views}!module@\spxentry{module}|hyperpage}{15}
+\indexentry{domcompromise() (w module mainApp.views)@\spxentry{domcompromise()}\spxextra{w module mainApp.views}|hyperpage}{15}
+\indexentry{islogin() (w module mainApp.views)@\spxentry{islogin()}\spxextra{w module mainApp.views}|hyperpage}{15}
+\indexentry{login\_view() (w module mainApp.views)@\spxentry{login\_view()}\spxextra{w module mainApp.views}|hyperpage}{15}
+\indexentry{logout\_view() (w module mainApp.views)@\spxentry{logout\_view()}\spxextra{w module mainApp.views}|hyperpage}{15}
+\indexentry{register\_view() (w module mainApp.views)@\spxentry{register\_view()}\spxextra{w module mainApp.views}|hyperpage}{15}
+\indexentry{module@\spxentry{module}!mainApp@\spxentry{mainApp}|hyperpage}{23}
+\indexentry{mainApp@\spxentry{mainApp}!module@\spxentry{module}|hyperpage}{23}
+\indexentry{module@\spxentry{module}!manage@\spxentry{manage}|hyperpage}{23}
+\indexentry{manage@\spxentry{manage}!module@\spxentry{module}|hyperpage}{23}
+\indexentry{main() (w module manage)@\spxentry{main()}\spxextra{w module manage}|hyperpage}{23}

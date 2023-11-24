@@ -124,6 +124,19 @@
 </section>
 <section id="module-mainApp.admin">
 <span id="mainapp-admin-module"></span><h2>mainApp.admin module<a class="headerlink" href="#module-mainApp.admin" title="Link to this heading"></a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.contrib</span> <span class="kn">import</span> <span class="n">admin</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">Comment</span><span class="p">)</span>
+<span class="n">admin</span><span class="o">.</span><span class="n">site</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">UserProfile</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Konfiguracja panelu administracyjnego.</span>
+
+<span class="sd">Rejestruje modele `Comment` i `UserProfile` w panelu administracyjnym Django.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
 </section>
 <section id="module-mainApp.apps">
 <span id="mainapp-apps-module"></span><h2>mainApp.apps module<a class="headerlink" href="#module-mainApp.apps" title="Link to this heading"></a></h2>
@@ -143,6 +156,15 @@
 
 </dd></dl>
 
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.apps</span> <span class="kn">import</span> <span class="n">AppConfig</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Klasa konfiguracyjna aplikacji głównej.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="k">class</span> <span class="nc">MainappConfig</span><span class="p">(</span><span class="n">AppConfig</span><span class="p">):</span>
+    <span class="n">default_auto_field</span> <span class="o">=</span> <span class="s1">&#39;django.db.models.BigAutoField&#39;</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;mainApp&#39;</span>
+</pre></div>
+</div>
 </section>
 <section id="module-mainApp.decorators">
 <span id="mainapp-decorators-module"></span><h2>mainApp.decorators module<a class="headerlink" href="#module-mainApp.decorators" title="Link to this heading"></a></h2>
@@ -152,6 +174,19 @@
 <dd><p>Sprawdza, czy użytkownik jest zalogowany. Zwraca 401 z komunikatem błędu JSON, jeśli użytkownik nie jest zalogowany.</p>
 </dd></dl>
 
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">HttpRequest</span><span class="p">,</span> <span class="n">JsonResponse</span>
+<span class="k">def</span> <span class="nf">require_login</span><span class="p">(</span><span class="n">func</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sprawdza, czy użytkownik jest zalogowany. Zwraca 401 z komunikatem błędu JSON, jeśli użytkownik nie jest zalogowany.</span>
+
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">def</span> <span class="nf">_wrapper</span><span class="p">(</span><span class="n">request</span><span class="p">:</span><span class="n">HttpRequest</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">func</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Please log in first!&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">401</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">_wrapper</span>
+</pre></div>
+</div>
 </section>
 <section id="module-mainApp.forms">
 <span id="mainapp-forms-module"></span><h2>mainApp.forms module<a class="headerlink" href="#module-mainApp.forms" title="Link to this heading"></a></h2>
@@ -207,6 +242,55 @@ User: Obiekt użytkownika, który został zapisany.</p>
 
 </dd></dl>
 
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">forms</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.forms</span> <span class="kn">import</span> <span class="n">UserCreationForm</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django_otp.plugins.otp_totp.models</span> <span class="kn">import</span> <span class="n">TOTPDevice</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">UserProfile</span>
+
+<span class="k">class</span> <span class="nc">UserForm</span><span class="p">(</span><span class="n">UserCreationForm</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Formularz rejestracji użytkownika z możliwością włączenia uwierzytelniania dwuetapowego.</span>
+
+<span class="sd">    Dziedziczy po klasie UserCreationForm i dodaje pole `email` oraz `enable_2fa` do standardowego formularza rejestracji.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">email</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">EmailField</span><span class="p">(</span><span class="n">required</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">enable_2fa</span> <span class="o">=</span> <span class="n">forms</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span>
+        <span class="n">required</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span>
+        <span class="n">widget</span><span class="o">=</span><span class="n">forms</span><span class="o">.</span><span class="n">CheckboxInput</span><span class="p">(</span><span class="n">attrs</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;class&#39;</span><span class="p">:</span> <span class="s1">&#39;form-check-input&#39;</span><span class="p">}),</span>
+        <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Enable Two-Factor Authentication&#39;</span>
+    <span class="p">)</span>
+
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">User</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;username&quot;</span><span class="p">,</span> <span class="s2">&quot;email&quot;</span><span class="p">,</span> <span class="s2">&quot;password1&quot;</span><span class="p">,</span> <span class="s2">&quot;password2&quot;</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">save</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">commit</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Zapisuje użytkownika oraz, jeśli włączono uwierzytelnianie dwuetapowe,</span>
+<span class="sd">        tworzy i zapisuje urządzenie TOTP dla tego użytkownika.</span>
+<span class="sd">        </span>
+<span class="sd">        Args:</span>
+<span class="sd">        commit (bool): Określa, czy operacja zapisu ma zostać wykonana natychmiastowo (domyślnie True).</span>
+<span class="sd">        </span>
+<span class="sd">        Returns:</span>
+<span class="sd">        User: Obiekt użytkownika, który został zapisany.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="nb">super</span><span class="p">(</span><span class="n">UserForm</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">commit</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+        <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;email&#39;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">commit</span><span class="p">:</span>
+            <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">cleaned_data</span><span class="p">[</span><span class="s1">&#39;enable_2fa&#39;</span><span class="p">]:</span>
+            <span class="n">totp_device</span> <span class="o">=</span> <span class="n">TOTPDevice</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">confirmed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+            <span class="n">totp_device</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+            <span class="n">profile</span> <span class="o">=</span> <span class="n">UserProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+            <span class="n">profile</span><span class="o">.</span><span class="n">totp_device</span> <span class="o">=</span> <span class="n">totp_device</span>
+            <span class="n">profile</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+        <span class="k">return</span> <span class="n">user</span>
+</pre></div>
+</div>
 </section>
 <section id="module-mainApp.models">
 <span id="mainapp-models-module"></span><h2>mainApp.models module<a class="headerlink" href="#module-mainApp.models" title="Link to this heading"></a></h2>
@@ -352,6 +436,45 @@ object the first time, the query is executed.</p>
 
 </dd></dl>
 
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.utils.timezone</span> <span class="kn">import</span> <span class="n">now</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth.models</span> <span class="kn">import</span> <span class="n">User</span>
+<span class="kn">from</span> <span class="nn">django_otp.plugins.otp_totp.models</span> <span class="kn">import</span> <span class="n">TOTPDevice</span>
+
+<span class="k">class</span> <span class="nc">Comment</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Model reprezentujący komentarze.</span>
+
+<span class="sd">    Atrybuty:</span>
+<span class="sd">    - title (str): Tytuł komentarza.</span>
+<span class="sd">    - comment (str): Treść komentarza.</span>
+<span class="sd">    - date_time (datetime): Data i czas utworzenia komentarza (domyślnie aktualna data i czas).</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">128</span><span class="p">)</span>
+    <span class="n">comment</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">TextField</span><span class="p">()</span>
+    <span class="n">date_time</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="n">now</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">UserProfile</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Model reprezentujący profil użytkownika.</span>
+
+<span class="sd">    Atrybuty:</span>
+<span class="sd">    - user (User): Odwołanie do modelu użytkownika (User).</span>
+<span class="sd">    - totp_device (TOTPDevice): Odwołanie do modelu TOTPDevice (uwierzytelnianie dwuetapowe).</span>
+<span class="sd">    - enable_2fa (bool): Flaga określająca, czy użytkownik włączył uwierzytelnianie dwuetapowe.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">user</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">User</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">totp_device</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">OneToOneField</span><span class="p">(</span><span class="n">TOTPDevice</span><span class="p">,</span> <span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">on_delete</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CASCADE</span><span class="p">)</span>
+    <span class="n">enable_2fa</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">BooleanField</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+    
+    <span class="k">def</span> <span class="fm">__str__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Zwraca czytelny opis profilu użytkownika.</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;UserProfile for </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">username</span><span class="si">}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
 </section>
 <section id="module-mainApp.serializers">
 <span id="mainapp-serializers-module"></span><h2>mainApp.serializers module<a class="headerlink" href="#module-mainApp.serializers" title="Link to this heading"></a></h2>
@@ -384,9 +507,31 @@ object the first time, the query is executed.</p>
 
 </dd></dl>
 
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">rest_framework.serializers</span> <span class="kn">import</span> <span class="n">ModelSerializer</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Comment</span>
+
+<span class="k">class</span> <span class="nc">CommentSerializer</span><span class="p">(</span><span class="n">ModelSerializer</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Serializer dla modelu Comment.</span>
+
+<span class="sd">    Mapuje pola modelu Comment na format JSON i obsługuje walidację danych wejściowych.</span>
+
+<span class="sd">    Fields:</span>
+<span class="sd">    - title (str): Tytuł komentarza.</span>
+<span class="sd">    - date_time (datetime): Data i czas utworzenia komentarza.</span>
+<span class="sd">    - comment (str): Treść komentarza.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">class</span> <span class="nc">Meta</span><span class="p">:</span>
+        <span class="n">model</span> <span class="o">=</span> <span class="n">Comment</span>
+        <span class="n">fields</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;title&#39;</span><span class="p">,</span> <span class="s1">&#39;date_time&#39;</span><span class="p">,</span> <span class="s1">&#39;comment&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
 </section>
 <section id="module-mainApp.tests">
 <span id="mainapp-tests-module"></span><h2>mainApp.tests module<a class="headerlink" href="#module-mainApp.tests" title="Link to this heading"></a></h2>
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+</pre></div>
+</div>
 </section>
 <section id="module-mainApp.urls">
 <span id="mainapp-urls-module"></span><h2>mainApp.urls module<a class="headerlink" href="#module-mainApp.urls" title="Link to this heading"></a></h2>
@@ -407,6 +552,40 @@ object the first time, the query is executed.</p>
 - /subscribe/ : Endpoint do renderowania maila subskrypcyjnego.</p>
 </dd></dl>
 
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.urls</span> <span class="kn">import</span> <span class="n">path</span>
+
+<span class="kn">from</span> <span class="nn">.</span> <span class="kn">import</span> <span class="n">views</span>
+
+<span class="n">urlpatterns</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;register/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">register_view</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;register&quot;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;login/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">login_view</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;login&quot;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;logout/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">logout_view</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">&quot;logout&quot;</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;islogin/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">islogin</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;comments/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">comments</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;comments/gen/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">gen_comments</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;js/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">domcompromise</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;sqlgen/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">create_sample</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;sqldemo/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">getsql</span><span class="p">),</span>
+    <span class="n">path</span><span class="p">(</span><span class="s2">&quot;subscribe/&quot;</span><span class="p">,</span> <span class="n">views</span><span class="o">.</span><span class="n">render_mail</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">Moduł zawierający punkty końcowe (endpoints) dla aplikacji.</span>
+
+<span class="sd">Endpoints:</span>
+<span class="sd">- /register/ : Endpoint do rejestracji użytkownika.</span>
+<span class="sd">- /login/ : Endpoint do logowania użytkownika.</span>
+<span class="sd">- /logout/ : Endpoint do wylogowania użytkownika.</span>
+<span class="sd">- /islogin/ : Endpoint do sprawdzenia stanu zalogowania.</span>
+<span class="sd">- /comments/ : Endpoint do wyświetlania komentarzy.</span>
+<span class="sd">- /comments/gen/ : Endpoint do generowania komentarzy.</span>
+<span class="sd">- /js/ : Endpoint do obsługi kompromitacji DOM (niebezpieczne).</span>
+<span class="sd">- /sqlgen/ : Endpoint do tworzenia próbek SQL (niebezpieczne).</span>
+<span class="sd">- /sqldemo/ : Endpoint do pobierania przykładowego SQL (niebezpieczne).</span>
+<span class="sd">- /subscribe/ : Endpoint do renderowania maila subskrypcyjnego.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+</pre></div>
+</div>
 </section>
 <section id="module-mainApp.views">
 <span id="mainapp-views-module"></span><h2>mainApp.views module<a class="headerlink" href="#module-mainApp.views" title="Link to this heading"></a></h2>
@@ -480,6 +659,316 @@ object the first time, the query is executed.</p>
 </dl>
 </dd></dl>
 
+<div class="highlight-Python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.http</span> <span class="kn">import</span> <span class="n">JsonResponse</span><span class="p">,</span> <span class="n">HttpResponse</span><span class="p">,</span> <span class="n">HttpRequest</span>
+<span class="kn">from</span> <span class="nn">django_otp.plugins.otp_totp.models</span> <span class="kn">import</span> <span class="n">TOTPDevice</span>
+<span class="kn">from</span> <span class="nn">django.views.decorators.csrf</span> <span class="kn">import</span> <span class="n">csrf_exempt</span><span class="p">,</span> <span class="n">ensure_csrf_cookie</span>
+<span class="kn">from</span> <span class="nn">django.contrib.auth</span> <span class="kn">import</span> <span class="n">login</span><span class="p">,</span> <span class="n">authenticate</span><span class="p">,</span> <span class="n">logout</span>
+<span class="kn">from</span> <span class="nn">django.views.decorators.http</span> <span class="kn">import</span> <span class="n">require_http_methods</span>
+<span class="kn">from</span> <span class="nn">django.utils.dateparse</span> <span class="kn">import</span> <span class="n">parse_datetime</span>
+<span class="kn">from</span> <span class="nn">.forms</span> <span class="kn">import</span> <span class="n">UserForm</span>
+<span class="kn">from</span> <span class="nn">django.template.loader</span> <span class="kn">import</span> <span class="n">get_template</span>
+<span class="kn">from</span> <span class="nn">django.core.mail</span> <span class="kn">import</span> <span class="n">EmailMultiAlternatives</span>
+<span class="kn">from</span> <span class="nn">backend</span> <span class="kn">import</span> <span class="n">settings</span>
+<span class="kn">from</span> <span class="nn">traceback</span> <span class="kn">import</span> <span class="n">format_exc</span>
+<span class="kn">from</span> <span class="nn">.serializers</span> <span class="kn">import</span> <span class="n">CommentSerializer</span>
+<span class="kn">from</span> <span class="nn">.models</span> <span class="kn">import</span> <span class="n">Comment</span><span class="p">,</span> <span class="n">UserProfile</span>
+<span class="kn">from</span> <span class="nn">.decorators</span> <span class="kn">import</span> <span class="n">require_login</span>
+<span class="kn">import</span> <span class="nn">sqlite3</span>
+<span class="kn">import</span> <span class="nn">qrcode</span>
+<span class="kn">from</span> <span class="nn">io</span> <span class="kn">import</span> <span class="n">BytesIO</span>
+<span class="kn">from</span> <span class="nn">base64</span> <span class="kn">import</span> <span class="n">b64encode</span>
+
+<span class="nd">@require_http_methods</span><span class="p">([</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">register_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Rejestruje nowego użytkownika.</span>
+
+<span class="sd">    :param request: HttpRequest object</span>
+<span class="sd">    :return: JsonResponse z komunikatem o sukcesie/błędzie</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">)</span>
+        <span class="n">email</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;email&#39;</span><span class="p">)</span>
+        <span class="n">password1</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password1&#39;</span><span class="p">)</span>
+        <span class="n">password2</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password2&#39;</span><span class="p">)</span>
+        <span class="n">enable_2fa</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;enable_2fa&#39;</span><span class="p">)</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span>
+
+        <span class="n">form</span> <span class="o">=</span> <span class="n">UserForm</span><span class="p">({</span>
+            <span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">username</span><span class="p">,</span>
+            <span class="s1">&#39;email&#39;</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span>
+            <span class="s1">&#39;password1&#39;</span><span class="p">:</span> <span class="n">password1</span><span class="p">,</span>
+            <span class="s1">&#39;password2&#39;</span><span class="p">:</span> <span class="n">password2</span>
+        <span class="p">})</span>
+
+        <span class="k">if</span> <span class="n">form</span><span class="o">.</span><span class="n">is_valid</span><span class="p">():</span>
+            <span class="n">user</span> <span class="o">=</span> <span class="n">form</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+
+            <span class="k">if</span> <span class="n">enable_2fa</span><span class="p">:</span>
+                <span class="n">profile</span><span class="p">,</span> <span class="n">created</span> <span class="o">=</span> <span class="n">UserProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get_or_create</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+
+                <span class="k">if</span> <span class="ow">not</span> <span class="n">profile</span><span class="o">.</span><span class="n">totp_device</span><span class="p">:</span>
+                    <span class="n">totp_device</span> <span class="o">=</span> <span class="n">TOTPDevice</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">,</span> <span class="n">confirmed</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+                    <span class="n">totp_device</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+                    <span class="n">profile</span><span class="o">.</span><span class="n">totp_device</span> <span class="o">=</span> <span class="n">totp_device</span>
+                    <span class="n">profile</span><span class="o">.</span><span class="n">enable_2fa</span> <span class="o">=</span> <span class="n">enable_2fa</span>
+                    <span class="n">profile</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+        
+                    <span class="n">qr</span> <span class="o">=</span> <span class="n">qrcode</span><span class="o">.</span><span class="n">QRCode</span><span class="p">(</span>
+                        <span class="n">version</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+                        <span class="n">error_correction</span><span class="o">=</span><span class="n">qrcode</span><span class="o">.</span><span class="n">constants</span><span class="o">.</span><span class="n">ERROR_CORRECT_L</span><span class="p">,</span>
+                        <span class="n">box_size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+                        <span class="n">border</span><span class="o">=</span><span class="mi">0</span>
+                    <span class="p">)</span>
+                    <span class="n">qr</span><span class="o">.</span><span class="n">add_data</span><span class="p">(</span><span class="n">totp_device</span><span class="o">.</span><span class="n">config_url</span><span class="p">)</span>
+                    <span class="n">qr</span><span class="o">.</span><span class="n">make</span><span class="p">(</span><span class="n">fit</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                    <span class="n">qr_code_img</span> <span class="o">=</span> <span class="n">qr</span><span class="o">.</span><span class="n">make_image</span><span class="p">(</span><span class="n">fill_color</span><span class="o">=</span><span class="p">(</span><span class="mi">66</span><span class="p">,</span> <span class="mi">184</span><span class="p">,</span> <span class="mi">131</span><span class="p">),</span> <span class="n">back_color</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span><span class="mi">18</span><span class="p">,</span><span class="mi">18</span><span class="p">))</span>
+                    <span class="n">buffer</span> <span class="o">=</span> <span class="n">BytesIO</span><span class="p">()</span>
+                    <span class="n">qr_code_img</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">buffer</span><span class="p">)</span>
+                    <span class="n">buffer</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+                    <span class="n">encoded_img</span> <span class="o">=</span> <span class="n">b64encode</span><span class="p">(</span><span class="n">buffer</span><span class="o">.</span><span class="n">read</span><span class="p">())</span><span class="o">.</span><span class="n">decode</span><span class="p">()</span>
+                    <span class="n">qr_code_data</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;data:image/png;base64,</span><span class="si">{</span><span class="n">encoded_img</span><span class="si">}</span><span class="s1">&#39;</span>
+
+                    <span class="n">response_data</span> <span class="o">=</span> <span class="p">{</span>
+                    <span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;User registered successfully&#39;</span><span class="p">,</span>
+                    <span class="s1">&#39;image_data&#39;</span><span class="p">:</span> <span class="n">qr_code_data</span>
+                    <span class="p">}</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="n">response_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;User registered successfully (2FA was already enabled)&#39;</span><span class="p">}</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">response_data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;User registered successfully (2FA is disabled)&#39;</span><span class="p">}</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="n">form</span><span class="o">.</span><span class="n">errors</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">(</span><span class="n">response_data</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)},</span> <span class="n">status</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+    
+<span class="nd">@require_http_methods</span><span class="p">([</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">login_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Loguje użytkownika.</span>
+
+<span class="sd">    :param request: HttpRequest object</span>
+<span class="sd">    :return: JsonResponse z komunikatem o sukcesie/błędzie</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">username</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;username&#39;</span><span class="p">)</span>
+        <span class="n">password</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;password&#39;</span><span class="p">)</span>
+        <span class="n">user</span> <span class="o">=</span> <span class="n">authenticate</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="n">username</span><span class="p">,</span> <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">)</span>
+
+        <span class="k">if</span> <span class="n">user</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">requires_2fa</span> <span class="o">=</span> <span class="kc">False</span>
+
+            <span class="k">try</span><span class="p">:</span>
+                <span class="n">user_profile</span> <span class="o">=</span> <span class="n">UserProfile</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">user_profile</span><span class="o">.</span><span class="n">enable_2fa</span><span class="p">:</span>
+                    <span class="n">requires_2fa</span> <span class="o">=</span> <span class="kc">True</span>
+            <span class="k">except</span> <span class="n">UserProfile</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+                <span class="k">pass</span>
+
+            <span class="k">if</span> <span class="n">requires_2fa</span><span class="p">:</span>
+                <span class="n">totp_code</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">POST</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;totp_code&#39;</span><span class="p">)</span>
+                <span class="k">if</span> <span class="n">totp_code</span><span class="p">:</span>
+                    <span class="k">try</span><span class="p">:</span>
+                        <span class="n">totp_device</span> <span class="o">=</span> <span class="n">TOTPDevice</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">user</span><span class="o">=</span><span class="n">user</span><span class="p">)</span>
+                        <span class="k">if</span> <span class="n">totp_device</span><span class="o">.</span><span class="n">verify_token</span><span class="p">(</span><span class="n">totp_code</span><span class="p">):</span>
+                            <span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+                            <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;User logged in successfully&#39;</span><span class="p">})</span>
+                        <span class="k">else</span><span class="p">:</span>
+                            <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Invalid 2FA code&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+                    <span class="k">except</span> <span class="n">TOTPDevice</span><span class="o">.</span><span class="n">DoesNotExist</span><span class="p">:</span>
+                        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;2FA device not found&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+                <span class="k">else</span><span class="p">:</span>
+                    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;requires_2fa&#39;</span><span class="p">:</span> <span class="kc">True</span><span class="p">})</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">login</span><span class="p">(</span><span class="n">request</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+                <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;message&#39;</span><span class="p">:</span> <span class="s1">&#39;User logged in successfully&#39;</span><span class="p">})</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="s1">&#39;Invalid username or password&#39;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">400</span><span class="p">)</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;error&#39;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)},</span> <span class="n">status</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+ 
+    
+<span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="k">def</span> <span class="nf">logout_view</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Wylogowuje użytkownika.</span>
+
+<span class="sd">    :param request: HttpRequest object</span>
+<span class="sd">    :return: JsonResponse z komunikatem o wylogowaniu</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">logout</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s1">&#39;message&#39;</span><span class="p">:</span><span class="s1">&#39;User logged out&#39;</span><span class="p">})</span>
+
+
+<span class="nd">@require_http_methods</span><span class="p">([</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<span class="nd">@ensure_csrf_cookie</span>
+<span class="k">def</span> <span class="nf">islogin</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Sprawdza stan zalogowania użytkownika.</span>
+
+<span class="sd">    :param request: HttpRequest object</span>
+<span class="sd">    :return: JsonResponse z informacją o zalogowaniu</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;authenticated&quot;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">})</span>
+
+
+<span class="nd">@require_http_methods</span><span class="p">([</span><span class="s1">&#39;GET&#39;</span><span class="p">])</span>
+<span class="nd">@require_login</span>
+<span class="k">def</span> <span class="nf">comments</span><span class="p">(</span><span class="n">request</span><span class="p">:</span><span class="n">HttpRequest</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Zwraca listę komentarzy.</span>
+
+<span class="sd">    :param request: HttpRequest object</span>
+<span class="sd">    :return: JsonResponse z listą komentarzy</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;comments&quot;</span><span class="p">:</span> <span class="n">CommentSerializer</span><span class="p">(</span><span class="n">Comment</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">(),</span> <span class="n">many</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span><span class="o">.</span><span class="n">data</span><span class="p">})</span>
+
+
+<span class="nd">@require_http_methods</span><span class="p">([</span><span class="s1">&#39;POST&#39;</span><span class="p">])</span>
+<span class="nd">@csrf_exempt</span>
+<span class="nd">@require_login</span>
+<span class="k">def</span> <span class="nf">gen_comments</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Generuje przykładowe komentarze.</span>
+
+<span class="sd">    :param request: HttpRequest object</span>
+<span class="sd">    :return: JsonResponse z komunikatem o wygenerowanych komentarzach</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">Comment</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">count</span><span class="p">()</span> <span class="o">&gt;=</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Already created&quot;</span><span class="p">})</span>
+    <span class="n">Comment</span><span class="p">(</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Simple comment&#39;</span><span class="p">,</span>
+        <span class="n">comment</span> <span class="o">=</span> <span class="s1">&#39;This is a great example of normal comment&#39;</span><span class="p">,</span>
+        <span class="n">date_time</span> <span class="o">=</span> <span class="n">parse_datetime</span><span class="p">(</span><span class="s1">&#39;2023-06-12T18:22:00+02:00&#39;</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">Comment</span><span class="p">(</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Unharmful comment&#39;</span><span class="p">,</span>
+        <span class="n">comment</span> <span class="o">=</span> <span class="s1">&#39;This is a great example of unharmful &lt;strong&gt;comment&lt;/strong&gt; with injected HTML &amp;lt;strong&amp;gt; tag.&#39;</span><span class="p">,</span>
+        <span class="n">date_time</span> <span class="o">=</span> <span class="n">parse_datetime</span><span class="p">(</span><span class="s1">&#39;2023-08-15T15:32:10+02:00&#39;</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">Comment</span><span class="p">(</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Somewhat dangerous comment&#39;</span><span class="p">,</span>
+        <span class="n">comment</span> <span class="o">=</span> <span class="s1">&#39;This is a great example of dangerous comment &lt;iframe width=&quot;560&quot; height=&quot;315&quot; src=&quot;https://www.youtube.com/embed/dQw4w9WgXcQ?si=O7ynaNQw9GcNtXud&quot; title=&quot;YouTube video player&quot; frameborder=&quot;0&quot; allow=&quot;accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share&quot; allowfullscreen&gt;&lt;/iframe&gt; with injected HTML &amp;lt;iframe&amp;gt; tag.&#39;</span><span class="p">,</span>
+        <span class="n">date_time</span> <span class="o">=</span> <span class="n">parse_datetime</span><span class="p">(</span><span class="s1">&#39;2023-09-08T22:40:31+02:00&#39;</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">Comment</span><span class="p">(</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Pretty dangerous comment&#39;</span><span class="p">,</span>
+        <span class="n">comment</span> <span class="o">=</span> <span class="s1">&#39;This is a great example of dangerous comment with &lt;img src onerror=&quot;alert(</span><span class="se">\&#39;</span><span class="s1">injected &lt;script&gt; tag</span><span class="se">\&#39;</span><span class="s1">)&quot;/&gt;&#39;</span><span class="p">,</span>
+        <span class="n">date_time</span> <span class="o">=</span> <span class="n">parse_datetime</span><span class="p">(</span><span class="s1">&#39;2023-10-09T00:20:15+02:00&#39;</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="n">Comment</span><span class="p">(</span>
+        <span class="n">title</span> <span class="o">=</span> <span class="s1">&#39;Extremly dangerous comment&#39;</span><span class="p">,</span>
+        <span class="n">comment</span> <span class="o">=</span> <span class="s1">&#39;&lt;img src onerror=&quot;fetch(</span><span class="se">\&#39;</span><span class="s1">http://localhost:8000/main/js/</span><span class="se">\&#39;</span><span class="s1">).then(response =&gt; response.text()).then( text =&gt; document.write(text)).catch(error =&gt; { })&quot;&gt;&#39;</span><span class="p">,</span>
+        <span class="n">date_time</span> <span class="o">=</span> <span class="n">parse_datetime</span><span class="p">(</span><span class="s1">&#39;2023-10-12T21:37:00+02:00&#39;</span><span class="p">)</span>
+    <span class="p">)</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Comments generated successfully&quot;</span><span class="p">})</span>
+
+
+<span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="c1"># No @require_login -&gt; We simulate hackers website where no login is required.</span>
+<span class="k">def</span> <span class="nf">domcompromise</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Endpoint do demonstracji kompromitacji DOM.</span>
+
+<span class="sd">    :param request: HttpRequest object</span>
+<span class="sd">    :return: HttpResponse z kodem HTML</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">page</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="s2">&quot;dom.html&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">HttpResponse</span><span class="p">(</span><span class="n">page</span><span class="o">.</span><span class="n">render</span><span class="p">())</span>
+
+
+<span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;POST&quot;</span><span class="p">])</span>
+<span class="nd">@require_login</span>
+<span class="k">def</span> <span class="nf">create_sample</span><span class="p">(</span><span class="n">request</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Tworzy przykładową bazę danych.</span>
+
+<span class="sd">    :param request: HttpRequest object</span>
+<span class="sd">    :return: JsonResponse z komunikatem o sukcesie/błędzie</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">file</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s2">&quot;start.sql&quot;</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;sample.sqlite3&#39;</span><span class="p">)</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">executescript</span><span class="p">(</span><span class="n">file</span><span class="o">.</span><span class="n">read</span><span class="p">())</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Sample database created successfully&quot;</span><span class="p">})</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)},</span> <span class="n">status</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+
+<span class="nd">@require_http_methods</span><span class="p">([</span><span class="s2">&quot;GET&quot;</span><span class="p">])</span>
+<span class="nd">@require_login</span>
+<span class="k">def</span> <span class="nf">getsql</span><span class="p">(</span><span class="n">request</span><span class="p">:</span><span class="n">HttpRequest</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Zwraca dane z bazy danych.</span>
+
+<span class="sd">    :param request: HttpRequest object</span>
+<span class="sd">    :return: JsonResponse z danymi z bazy</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">conn</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="s1">&#39;sample.sqlite3&#39;</span><span class="p">)</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">row_factory</span> <span class="o">=</span> <span class="n">sqlite3</span><span class="o">.</span><span class="n">Row</span>
+        <span class="n">cursor</span> <span class="o">=</span> <span class="n">conn</span><span class="o">.</span><span class="n">cursor</span><span class="p">()</span>
+        <span class="n">result</span> <span class="o">=</span> <span class="kc">None</span>
+        <span class="n">name</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">[</span><span class="s1">&#39;name&#39;</span><span class="p">]</span> <span class="k">if</span> <span class="s1">&#39;name&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span> <span class="k">else</span> <span class="s1">&#39;&#39;</span>
+        <span class="k">if</span> <span class="s1">&#39;safe&#39;</span> <span class="ow">in</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span> <span class="ow">and</span> <span class="n">request</span><span class="o">.</span><span class="n">GET</span><span class="p">[</span><span class="s1">&#39;safe&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;true&#39;</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="s2">&quot;&quot;&quot;</span>
+<span class="s2">            SELECT </span>
+<span class="s2">                name, </span>
+<span class="s2">                price, </span>
+<span class="s2">                thumbnail </span>
+<span class="s2">            FROM </span>
+<span class="s2">                products </span>
+<span class="s2">            WHERE </span>
+<span class="s2">                name LIKE ?</span>
+<span class="s2">            &quot;&quot;&quot;</span><span class="p">,</span>
+                <span class="p">(</span><span class="sa">f</span><span class="s1">&#39;%</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s1">%&#39;</span><span class="p">,)</span>
+            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">result</span> <span class="o">=</span> <span class="n">cursor</span><span class="o">.</span><span class="n">execute</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;SELECT name, price, thumbnail FROM products WHERE name LIKE &#39;%</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">%&#39;&quot;</span><span class="p">)</span>
+        <span class="c1"># IMPORTANT #</span>
+        <span class="c1"># WE ASSUME DEV IS LAZY AND WANTED TO GET EVERY COLUMN FROM QUERY AND RETURN IT TO USER #</span>
+        <span class="n">products</span> <span class="o">=</span> <span class="p">[{</span><span class="n">item</span><span class="p">:</span> <span class="n">row</span><span class="p">[</span><span class="n">item</span><span class="p">]</span> <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">row</span><span class="o">.</span><span class="n">keys</span><span class="p">()}</span> <span class="k">for</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">result</span><span class="p">]</span>
+        <span class="n">cursor</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="n">conn</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;products&quot;</span><span class="p">:</span> <span class="n">products</span><span class="p">,</span> <span class="s2">&quot;query&quot;</span><span class="p">:</span> <span class="sa">f</span><span class="s2">&quot;SELECT name, price, thumbnail FROM products WHERE name LIKE &#39;%</span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">%&#39;&quot;</span><span class="p">})</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">),</span> <span class="s2">&quot;stack&quot;</span><span class="p">:</span> <span class="n">format_exc</span><span class="p">()},</span> <span class="n">status</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+
+
+<span class="c1"># @require_http_methods([&#39;POST&#39;]) # LAZY DEV DIDN&#39;T ADD REQUIRED METHOD</span>
+<span class="nd">@require_login</span> <span class="c1"># CSRF attack will be successfull - web browser sends cookies by default.</span>
+<span class="k">def</span> <span class="nf">render_mail</span><span class="p">(</span><span class="n">request</span><span class="p">:</span><span class="n">HttpRequest</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Renderuje i wysyła maila subskrypcyjnego.</span>
+
+<span class="sd">    :param request: HttpRequest object</span>
+<span class="sd">    :return: JsonResponse z komunikatem o wysłaniu maila</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">is_authenticated</span><span class="p">:</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Unauthorized. Please log in first!&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">401</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">html</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="s1">&#39;email.html&#39;</span><span class="p">)</span>
+        <span class="n">txt</span> <span class="o">=</span> <span class="n">get_template</span><span class="p">(</span><span class="s1">&#39;email.txt&#39;</span><span class="p">)</span>
+        <span class="n">subject</span><span class="p">,</span> <span class="n">_from</span><span class="p">,</span> <span class="n">to</span> <span class="o">=</span> <span class="s1">&#39;Important information&#39;</span><span class="p">,</span> <span class="n">settings</span><span class="o">.</span><span class="n">EMAIL_HOST_USER</span><span class="p">,</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">email</span>
+        <span class="n">html_content</span> <span class="o">=</span> <span class="n">html</span><span class="o">.</span><span class="n">render</span><span class="p">({</span><span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">username</span><span class="p">})</span>
+        <span class="n">text_content</span> <span class="o">=</span> <span class="n">txt</span><span class="o">.</span><span class="n">render</span><span class="p">({</span><span class="s1">&#39;username&#39;</span><span class="p">:</span> <span class="n">request</span><span class="o">.</span><span class="n">user</span><span class="o">.</span><span class="n">username</span><span class="p">})</span>
+        <span class="n">msg</span> <span class="o">=</span> <span class="n">EmailMultiAlternatives</span><span class="p">(</span><span class="n">subject</span><span class="p">,</span> <span class="n">text_content</span><span class="p">,</span> <span class="n">_from</span><span class="p">,</span> <span class="p">[</span><span class="n">to</span><span class="p">])</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">attach_alternative</span><span class="p">(</span><span class="n">html_content</span><span class="p">,</span> <span class="s2">&quot;text/html&quot;</span><span class="p">)</span>
+        <span class="n">msg</span><span class="o">.</span><span class="n">send</span><span class="p">()</span>
+    <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">e</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;error&quot;</span><span class="p">:</span> <span class="s2">&quot;Unable to send email!&quot;</span><span class="p">},</span> <span class="n">status</span><span class="o">=</span><span class="mi">500</span><span class="p">)</span>
+ 
+    <span class="k">return</span> <span class="n">JsonResponse</span><span class="p">({</span><span class="s2">&quot;message&quot;</span><span class="p">:</span> <span class="s2">&quot;Email sent successfully!&quot;</span><span class="p">})</span>
+</pre></div>
+</div>
 </section>
 <section id="module-mainApp">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-mainApp" title="Link to this heading"></a></h2>

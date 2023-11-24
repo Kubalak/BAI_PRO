@@ -40,4 +40,11 @@ html_static_path = ['_static']
 latex_elements = {
     'papersize': 'letterpaper',
     'pointsize': '11pt',
+    "preamble": r"""
+    \usepackage{listings}
+    \lstset{
+        language=Python,
+        title=\lstname
+    }
+    """
 }
