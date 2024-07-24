@@ -4,7 +4,7 @@ BAI project shows common vulnerabilities in web applications as well as ways to 
 
 ## Installation
 ```sh
-git clone https://orkan.tu.kielce.pl/gitlab/Kuba.J/bai_pro_demo.git
+git clone https://github.com/Kubalak/BAI_PRO.git
 cd bai_pro_demo
 cd backend
 conda create --name <env> --file requirements.txt
